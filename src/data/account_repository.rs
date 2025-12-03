@@ -5,7 +5,6 @@ use tokio::sync::RwLock;
 
 use crate::domain::{Account, AccountId, DomainError};
 
-
 #[async_trait]
 pub trait AccountRepository: Send + Sync {
     async fn create(&self, account: Account) -> Result<(), DomainError>;
@@ -14,7 +13,7 @@ pub trait AccountRepository: Send + Sync {
 }
 
 #[derive(Default, Clone)]
-pub struct InMemoryAccountRepository{
+pub struct InMemoryAccountRepository {
     accounts: Arc<RwLock<HashMap<AccountId, Account>>>,
 }
 
@@ -29,7 +28,7 @@ impl AccountRepository for InMemoryAccountRepository {
         Ok(())
     }
     async fn get(&self, id: AccountId) -> Result<Option<Account>, DomainError> {
-        let account  = self.accounts.read().await;
+        let account = self.accounts.read().await;
         Ok(account.get(&id).cloned())
     }
 

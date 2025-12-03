@@ -25,7 +25,6 @@ async fn main() -> std::io::Result<()> {
             .wrap(cors)
             .app_data(web::Data::new(service.clone()))
             .service(web::scope("/api").configure(handlers::configure))
-            
     })
     .bind(("127.0.0.1", 8080))?
     .run()

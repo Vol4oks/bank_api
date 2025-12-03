@@ -4,7 +4,9 @@ use crate::{
     application::bank_service::BankService,
     data::account_repository::InMemoryAccountRepository,
     domain::DomainError,
-    presentation::dto::{AccountResponse, AmountRequest, ApiError, CreateAccountRquest, TransferRequest},
+    presentation::dto::{
+        AccountResponse, AmountRequest, ApiError, CreateAccountRquest, TransferRequest,
+    },
 };
 
 #[get("/health")]
@@ -93,14 +95,14 @@ fn map_domain_error(error: DomainError) -> actix_web::Error {
             )
             .into()
         }
-        DomainError::InsufficientFunds => actix_web::error::InternalError::from_response( 
-            error, 
-            HttpResponse::BadRequest().json(ApiError::new("Insufficient funds"))
+        DomainError::InsufficientFunds => actix_web::error::InternalError::from_response(
+            error,
+            HttpResponse::BadRequest().json(ApiError::new("Insufficient funds")),
         )
         .into(),
-        DomainError::AccountNotFound => actix_web::error::InternalError::from_response( 
-            error, 
-            HttpResponse::NotFound().json(ApiError::new("account not found"))
+        DomainError::AccountNotFound => actix_web::error::InternalError::from_response(
+            error,
+            HttpResponse::NotFound().json(ApiError::new("account not found")),
         )
         .into(),
     }

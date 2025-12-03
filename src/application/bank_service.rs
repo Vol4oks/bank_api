@@ -50,7 +50,12 @@ where
         Ok(account)
     }
 
-    pub async fn transfer(&self, from: AccountId, to: AccountId, amount: i64) -> Result<(), DomainError> {
+    pub async fn transfer(
+        &self,
+        from: AccountId,
+        to: AccountId,
+        amount: i64,
+    ) -> Result<(), DomainError> {
         let transfer = Transfer::new(from, to, amount)?;
 
         let mut from_account = self.get_account(transfer.from).await?;
@@ -60,7 +65,7 @@ where
         to_account.deposit(transfer.amount);
 
         self.repo.upsert(from_account).await?;
-        self.repo.upsert(to_account).await?;        
+        self.repo.upsert(to_account).await?;
 
         Ok(())
     }
